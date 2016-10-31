@@ -10,7 +10,7 @@ object ParallelMapping {
         case y :: ys => f(y) :: mapSeq(ys, f)
     }
 
-    def mapASegSeq[A, B](in: Array[A], left: Int, right: Int, f: A => B, out: Array[B]): Unit = {
+    def mapSegSeq[A, B](in: Array[A], left: Int, right: Int, f: A => B, out: Array[B]): Unit = {
         var i = left
         while (i < right) {
             out(i) = f(in(i))
@@ -20,13 +20,25 @@ object ParallelMapping {
 
     val threshold = 3
 
-    def mapASegPar[A, B](in: Array[A], left: Int, right: Int, f: A => B, out: Array[B]): Unit = {
+    def mapSegPar[A, B](in: Array[A], left: Int, right: Int, f: A => B, out: Array[B]): Unit = {
         if (right - left < threshold) {
-            mapASegSeq(in, left, right, f, out)
+            mapSegSeq(in, left, right, f, out)
         } else {
             val mid = left + (right - left) / 2
-            parallel(mapASegPar(in, left, mid, f, out), mapASegPar(in, mid, right, f, out))
+            parallel(mapSegPar(in, left, mid, f, out), mapSegPar(in, mid, right, f, out))
         }
+    }
+
+    sealed abstract class Tree[A] {
+        val size: Int
+    }
+
+    case class Leaf[A](a: Array[A]) extends Tree[A] {
+        override val size = a.size
+    }
+
+    case class Node[A](l: Tree[A], r: Tree[A]) extends Tree[A] {
+        override val size = l.size + r.size
     }
 
     def mapTreePar[A:Manifest, B:Manifest](t: Tree[A], f: A => B): Tree[B] = {

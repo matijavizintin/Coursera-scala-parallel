@@ -14,7 +14,7 @@ class ParallelMappingTest extends FunSuite {
         val out = new Array[Int](5)
 
         val f = (x: Int) => x * x
-        mapASegSeq(in, 1, 3, f, out)
+        mapSegSeq(in, 1, 3, f, out)
 
         assert(out(0) === 0)
         assert(out(1) === 9)
@@ -30,7 +30,7 @@ class ParallelMappingTest extends FunSuite {
         initialize(in)
 
         val f = (x: Int) => x * x
-        mapASegPar(in, 1, 999, f, out)
+        mapSegPar(in, 1, 999, f, out)
 
         assert(out(0) === 0)
         assert(out(999) === 0)
