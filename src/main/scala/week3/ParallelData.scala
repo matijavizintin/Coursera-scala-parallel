@@ -2,6 +2,8 @@ package week3
 
 import par.parallel
 
+import scala.collection.GenSeq
+
 /**
   * Created by matijav on 01/11/2016.
   */
@@ -67,5 +69,20 @@ object ParallelData {
 
     def sumPar1(xs: Array[Int]): Int = {
         xs.par.fold(0)(_ + _)
+    }
+
+    def seqMax(xs: Array[Int]): Int = {
+        xs.max
+    }
+
+    def parMax(xs: Array[Int]): Int = {
+        xs.par.fold(Int.MinValue)(math.max)
+    }
+
+    def largestPalindrome(xs: GenSeq[Int]): Int = {
+        xs.aggregate(Int.MinValue)(
+            (largest, n) => if (n > largest && n.toString == n.toString.reverse) n else largest,
+            math.max
+        )
     }
 }
