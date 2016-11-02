@@ -5,7 +5,7 @@ import scala.util.DynamicVariable
 /**
   * Created by matijav on 25/10/2016.
   */
-package object week2 {
+package object par {
 
     val forkJoinPool = new ForkJoinPool
 

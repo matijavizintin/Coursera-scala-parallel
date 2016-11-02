@@ -1,6 +1,7 @@
 package week2
 
 import org.scalameter._
+import par.parallel
 
 
 /**

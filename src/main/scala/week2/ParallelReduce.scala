@@ -1,5 +1,7 @@
 package week2
 
+import par.parallel
+
 /**
   * Created by matijav on 31/10/2016.
   */
