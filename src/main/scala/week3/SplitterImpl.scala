@@ -11,7 +11,7 @@ class SplitterImpl[T] extends Splitter[T] {
 
     val threshold = 100
 
-    def fold(z: T)(f: (T, T) => T): T = {
+    def fold1(z: T)(f: (T, T) => T): T = {
         if (remaining < threshold) foldLeft(z)(f)
         else {
             val children: Seq[ForkJoinTask[T]] = for (child <- split) yield task {
