@@ -13,7 +13,7 @@ class ArrayCombiner[T <: AnyRef: ClassTag](val parallelism: Int) {
     private val buffers = new ArrayBuffer[ArrayBuffer[T]]
     buffers += new ArrayBuffer[T]
 
-    def += (x:T) = {    // returns ArrayCombiner[T]
+    def += (x: T) = {    // returns ArrayCombiner[T]
         buffers.last += x
         numElems += 1
         this
